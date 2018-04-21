@@ -5,20 +5,24 @@ import config, telebot, requests, firebase_admin
 from firebase_admin import db
 from telebot import types
 
-import flask
+from flask import Flask, request
+import time
 
-bot = telebot.TeleBot(config.token)
+bot = telebot.TeleBot(config.token, threaded=False)
+
+bot.remove_webhook()
+time.sleep(1)
+bot.set_webhook(url="https://practical-dijkstra-df5268.netlify.com")
 
 
-@app.route("https://practical-dijkstra-df5268.netlify.com", methods=['POST'])
+app = Flask(__name__)
+
+@app.route('/', methods=["POST"])
 def webhook():
-if flask.request.headers.get('content-type') == 'application/json':
-    json_string = flask.request.get_data().decode('utf-8')
-    update = telebot.types.Update.de_json(json_string)
-    bot.process_new_updates([update])
-    return ''
-else:
-    flask.abort(403)
+    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    print("Message")
+    return "ok", 200
+
 
 @bot.message_handler(commands=["start"])
 def start(message):
