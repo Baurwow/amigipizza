@@ -6,26 +6,10 @@ from firebase_admin import db
 from telebot import types
 
 from flask import Flask, request
-import time
 
 bot = telebot.TeleBot(config.token, threaded=False)
 
-bot.remove_webhook()
-time.sleep(1)
-bot.set_webhook(url="https://practical-dijkstra-df5268.netlify.com")
-
-
-app = Flask(__name__)
-
-app.debug = True
-app.run()
-app.run(debug=True)
-
-@app.route('/', methods=["POST"])
-def webhook():
-    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
-    print("Message")
-    return "ok", 200
+server = Flask(__name__)
 
 
 @bot.message_handler(commands=["start"])
@@ -278,3 +262,19 @@ def answer(message):
 		markup.row('Корзина')
 		bot.send_message(message.chat.id, "Выберите категорию:", reply_markup=markup)
 bot.polling(none_stop=True)
+
+@server.route('/', methods=['POST'])
+def getMessage():
+    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    return "!", 200
+
+
+@server.route("/")
+def webhook():
+    bot.remove_webhook()
+    bot.set_webhook(url='https://practical-dijkstra-df5268.netlify.com')
+    return "!", 200
+
+
+if name == "__main__":
+    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
