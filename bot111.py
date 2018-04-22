@@ -263,7 +263,7 @@ def answer(message):
 		bot.send_message(message.chat.id, "Выберите категорию:", reply_markup=markup)
 bot.polling(none_stop=True)
 
-@server.route('/', methods=['POST'])
+@server.route('/' + config.token, methods=['POST'])
 def getMessage():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
@@ -272,7 +272,7 @@ def getMessage():
 @server.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://amigopizza.herokuapp.com/')
+    bot.set_webhook(url='https://amigopizza.herokuapp.com/' + config.token)
     return "!", 200
 
 
