@@ -1,1 +1,1 @@
-worker: export FLASK_APP=bot111.py\n flask run
+web: export FLASK_APP=bot111.py\n flask run
