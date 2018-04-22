@@ -1,1 +1,1 @@
-web: export FLASK_APP=bot111.py\n flask run
+web: python bot111.py
