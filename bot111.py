@@ -272,7 +272,7 @@ def getMessage():
 @server.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://practical-dijkstra-df5268.netlify.com')
+    bot.set_webhook(url='https://amigopizza.herokuapp.com/')
     return "!", 200
 
 
