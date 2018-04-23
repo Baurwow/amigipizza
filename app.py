@@ -62,7 +62,7 @@ def con(message):
 		for key, value in order.items():
 			total = total + value["count"] * value["price"]
 			tmp = tmp + key + " = " + str(value["count"]) + " x " + str(value["price"]) + " = " + str(value["count"] * value["price"])  + " тенге \n"
-		bot.send_message("565221822", tmp + "\nВсего: " + str(total) + " тенге \nОт: " + str(message.contact.phone_number) + " @" +  str(message.chat.username) + ', адрес и время:'+str(adres))
+		bot.send_message("390370994", tmp + "\nВсего: " + str(total) + " тенге \nОт: " + str(message.contact.phone_number) + " @" +  str(message.chat.username) + ', адрес и время:'+str(adres))
 		bot.send_message(message.chat.id, "Спасибо,  Ваш заказ отправлен,пожалуйста дождитесь звонка оператора! ")
 		db.reference("/users/"+str(user_id)+"/basket").delete()
 		db.reference("/users/"+str(user_id)+"/adres").delete()
@@ -142,7 +142,7 @@ def answer(message):
 			for key, value in order.items():
 				total = total + value["count"] * value["price"]
 				tmp = tmp + key + " = " + str(value["count"]) + " x " + str(value["price"]) + " = " + str(value["count"] * value["price"])  + " тенге \n"
-			bot.send_message("565221822", tmp + "\nВсего: " + str(total) + " тенге \nОт: " + str(phone) + " @" + str(login) + ", адрес и время:" + str(adres))
+			bot.send_message("390370994", tmp + "\nВсего: " + str(total) + " тенге \nОт: " + str(phone) + " @" + str(login) + ", адрес и время:" + str(adres))
 			bot.send_message(message.chat.id, "Спасибо,  Ваш заказ отправлен,пожалуйста дождитесь звонка оператора!")
 			db.reference("/users/"+str(user_id)+"/basket").delete()
 			db.reference("/users/"+str(user_id)+"/adres").delete()
