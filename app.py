@@ -261,7 +261,10 @@ def answer(message):
 			markup.row(menu1)
 		markup.row('Корзина')
 		bot.send_message(message.chat.id, "Выберите категорию:", reply_markup=markup)
-bot.polling(none_stop=True)
+try:
+	bot.polling(none_stop=True)
+except Exception:
+	bot.polling(none_stop=True)
 
 @server.route('/' + config.token, methods=['POST'])
 def getMessage():
