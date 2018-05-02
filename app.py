@@ -262,6 +262,7 @@ def answer(message):
 			markup.row(menu1)
 		markup.row('Корзина')
 		bot.send_message(message.chat.id, "Выберите категорию:", reply_markup=markup)
+		db.reference("/users/"+str(user_id)+"/adres").delete()
 try:
 	bot.polling(none_stop=True)
 except Exception:
