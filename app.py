@@ -62,7 +62,7 @@ def con(message):
 		for key, value in order.items():
 			total = total + value["count"] * value["price"]
 			tmp = tmp + key + " = " + str(value["count"]) + " x " + str(value["price"]) + " = " + str(value["count"] * value["price"])  + " тенге \n"
-		bot.send_message("390370994", tmp + "\nВсего: " + str(total) + " тенге \nОт: " + str(message.contact.phone_number) + " @" +  str(message.chat.username) + ', адрес и время:'+str(adres))
+		bot.send_message("341193585", tmp + "\nВсего: " + str(total) + " тенге \nОт: " + str(message.contact.phone_number) + " @" +  str(message.chat.username) + ', адрес и время:'+str(adres))
 		bot.send_message(message.chat.id, "Спасибо,  Ваш заказ отправлен,пожалуйста дождитесь звонка оператора! ")
 		db.reference("/users/"+str(user_id)+"/basket").delete()
 		db.reference("/users/"+str(user_id)+"/adres").delete()
@@ -142,13 +142,14 @@ def answer(message):
 			for key, value in order.items():
 				total = total + value["count"] * value["price"]
 				tmp = tmp + key + " = " + str(value["count"]) + " x " + str(value["price"]) + " = " + str(value["count"] * value["price"])  + " тенге \n"
-			bot.send_message("390370994", tmp + "\nВсего: " + str(total) + " тенге \nОт: " + str(phone) + " @" + str(login) + ", адрес и время:" + str(adres))
+			bot.send_message("341193585", tmp + "\nВсего: " + str(total) + " тенге \nОт: " + str(phone) + " @" + str(login) + ", адрес и время:" + str(adres))
 			bot.send_message(message.chat.id, "Спасибо,  Ваш заказ отправлен,пожалуйста дождитесь звонка оператора!")
 			db.reference("/users/"+str(user_id)+"/basket").delete()
 			db.reference("/users/"+str(user_id)+"/adres").delete()
 			db.reference("/users/"+str(user_id)+'/tip').delete()
 	elif message.text == "✖️Очистить заказ":
 		db.reference("/users/"+str(user_id)+"/basket").delete()
+		db.reference("/users/"+str(user_id)+"/adres").delete()
 		markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 		markup.row('↩️Назад в Меню')
 		bot.send_message(message.chat.id, " Ваша корзина очищена", reply_markup=markup)
@@ -230,15 +231,15 @@ def answer(message):
 		testo=message.text
 		tip = db.reference("/users/"+str(user_id)).update({'tip':testo})
 		markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-		markup.row('Добавить в корзину')
-		markup.row('↩️Назад', 'Корзина')
+		markup.row('Добавить в корзину', 'Корзина')
+		markup.row('↩️Назад', '↩️Назад в Меню')
 		bot.send_message(message.chat.id, "Тесто выбрано", reply_markup=markup)
 	elif message.text == "Тонкое":
 		testo=message.text
 		tip = db.reference("/users/"+str(user_id)).update({'tip':testo})
 		markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-		markup.row('Добавить в корзину')
-		markup.row('↩️Назад', 'Корзина')
+		markup.row('Добавить в корзину','Корзина')
+		markup.row('↩️Назад', '↩️Назад в Меню')
 		bot.send_message(message.chat.id, "Тесто выбрано", reply_markup=markup)
 	if message.text in menu:
 		category = message.text
